@@ -39,11 +39,11 @@
             <div class="col-md-12">
               <div class="media">
                 <img class="align-self-start mr-5 img-thumbnail rounded-circle" src="{{(user.photoURL) ? user.photoURL : '/assets/images/dummy-user.png'}}"
-                  alt="{{user.displayName ? user.displayName : '-'}}">
+                  alt="{{user.displayName && user.displayName!='' ? user.displayName : '-'}}" width="100">
                   <br>
                   <button class="editbtn btn btn-primary" (click)="isEdit = true">Edit</button>
                 <div class="media-body">
-                  <h1>Hello: <strong>{{(user.displayName)}}</strong></h1>
+                  <h1>Hello: <strong>{{user.displayName && user.displayName!='' ? user.displayName : ' -'}} </strong></h1>
                   <p>User ID: <strong>{{user.uid}}</strong></p>
                   <p>Email: <strong>{{user.email}}</strong></p>
                 </div>
@@ -59,20 +59,28 @@
       
           <div class="authBlock" *ngIf="authService.userData as user">
             <h3>Edit Profile</h3>
-      
-            <div class="formGroup">
-              <input type="text" class="formControl" [value]="user.displayName" placeholder="Display Name" #displayName required>
-            </div>
-      
-            <div class="formGroup">
-              <input type="text" class="formControl" [value]="user.photoURL" placeholder="Profile Picture Url" #photoURL required>
-              <p>Please provide live image url only.</p>
-            </div>
-      
-            <div class="formGroup">
-              <button class="btn btn-primary" (click)="updateProfile(displayName.value, photoURL.value)">Update</button>
-              <button class="btn btn-danger ml-1" (click)="isEdit = false">Cancel</button>
-            </div>
+            <form>
+              <div class="formGroup">
+                <input type="text" class="formControl" [value]="user.displayName" placeholder="Display Name" #displayName required>
+              </div>
+  
+              <div class="formGroup">
+                <input type="file"
+                  id="file"  
+                  #userPhoto
+                  (change)="onFileSelected($event)"
+                  name="image"
+                  autocomplete="off"
+                  accept="image/*"/>
+              </div>
+        
+              <div class="formGroup">
+                <button class="btn btn-primary" [disabled]="isUpdating" (click)="updateProfile(displayName.value)"> {{ isUpdating ? 'Updating' : 'Update'}}</button>
+                <button class="btn btn-danger ml-1" [disabled]="isUpdating" (click)="isEdit = false">Cancel</button>
+              </div>
+            </form>
+            
+            
           </div>
     
         </div>

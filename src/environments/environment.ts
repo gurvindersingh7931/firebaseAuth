@@ -11,7 +11,7 @@ export const environment = {
     projectId: "angularauth-b5d70",
     storageBucket: "angularauth-b5d70.appspot.com",
     messagingSenderId: "28420860571",
-    appId: "1:28420860571:web:881605c9d0e35f35cc343e"
+    appId: "1:28420860571:web:19b23575b1dd15e2cc343e"
   }
 };
 
